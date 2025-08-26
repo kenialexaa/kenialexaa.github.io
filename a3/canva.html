@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas con Rectángulos — Casita</title>
+  <style>
+    body { background: #f6f7fb; font-family: 'Special Elite', monospace; text-align:center; padding:18px; color:#111; }
+    h1{margin:6px 0 14px}
+    canvas{border:1px solid #c8cbd6;background:#cce0ff;border-radius:8px}
+    .row{display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+    button{padding:8px 12px;border-radius:8px;border:0;background:#2b6df6;color:white;cursor:pointer;font-family:'Special Elite', monospace}
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>Casita de rectángulos</h1>
+  <p>Solo se usan rectángulos para formar la casa.</p>
+
+  <div class="row">
+    <div>
+      <h2>Arte</h2>
+      <canvas id="artCanvas" width="400" height="300" aria-label="Lienzo con casita"></canvas>
+    </div>
+
+    <div>
+      <h2>Animación</h2>
+      <canvas id="animCanvas" width="400" height="300" aria-label="Animación simple"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const art = document.getElementById('artCanvas');
+    const ctx = art.getContext('2d');
+
+    function drawHouse(){
+      ctx.fillStyle = '#99bbff'; ctx.fillRect(0,0,art.width, art.height);
+      ctx.fillStyle = '#229944'; ctx.fillRect(0, art.height - 80, art.width, 80);
+      const houseX = 110, houseY = 90, houseW = 180, houseH = 140;
+      ctx.fillStyle = '#ff88bb'; ctx.fillRect(houseX, houseY, houseW, houseH);
+      ctx.strokeStyle = '#bb5588'; ctx.lineWidth = 2; ctx.strokeRect(houseX+1, houseY+1, houseW-2, houseH-2);
+      const doorW = 36, doorH = 68;
+      ctx.fillStyle = '#bb3366'; ctx.fillRect(houseX + houseW/2 - doorW/2, houseY + houseH - doorH, doorW, doorH);
+      ctx.fillStyle = '#ffdd66'; ctx.fillRect(houseX + houseW/2 + doorW/2 - 8, houseY + houseH - doorH/2 - 4, 6, 6);
+      ctx.fillStyle = '#ffbbdd';
+      ctx.fillRect(houseX + 20, houseY + 28, 46, 40);
+      ctx.fillRect(houseX + houseW - 20 - 46, houseY + 28, 46, 40);
+      ctx.fillStyle = '#bb5588';
+      ctx.fillRect(houseX + 20, houseY + 28 + 18, 46, 6);
+      ctx.fillRect(houseX + 20 + 20, houseY + 28, 6, 40);
+      const roofTopY = houseY - 40;
+      for(let i=0;i<10;i++){
+        const w = houseW + (10 - i) * 12;
+        const x = houseX - (w - houseW)/2;
+        const y = roofTopY + i * 4;
+        ctx.fillStyle = i%2===0 ? '#ff66aa' : '#bb4466';
+        ctx.fillRect(x, y, w, 14);
+      }
+      ctx.fillStyle = '#996699'; ctx.fillRect(houseX + houseW - 46, houseY - 34, 18, 34);
+      ctx.fillStyle = '#ff88aa'; ctx.fillRect(houseX + houseW - 46 + 4, houseY - 34 + 4, 10, 10);
+      ctx.fillStyle = '#ffcc33'; ctx.fillRect(24, 24, 48, 48);
+    }
+
+    drawHouse();
+
+    const anim = document.getElementById('animCanvas');
+    const g = anim.getContext('2d');
+    const clouds = [ {x:20,y:40,w:60,h:20,v:0.85}, {x:160,y:60,w:90,h:24,v:0.7}, {x:260,y:30,w:70,h:18,v:0.8} ];
+
+    function loop(){
+      g.fillStyle = '#99bbff'; g.fillRect(0,0,anim.width, anim.height);
+      g.fillStyle = '#229944'; g.fillRect(0, anim.height - 60, anim.width, 60);
+      for(const c of clouds){
+        g.fillStyle = '#ffffff';
+        g.fillRect(c.x, c.y, c.w, c.h);
+        g.fillStyle = '#bbddff';
+        g.fillRect(c.x + c.w*0.2, c.y - 6, c.w*0.25, 8);
+        g.fillStyle = '#dcefff';
+        g.fillRect(c.x + c.w*0.5, c.y + 2, c.w*0.2, 6);
+        c.x += c.v;
+        if(c.x > anim.width + 20) c.x = -c.w - 40;
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
+  </script>
+</body>
+</html>
+
