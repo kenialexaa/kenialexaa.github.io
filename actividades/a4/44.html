@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reto Logo Animado</title>
+  <style>
+    body { background: #f6f7fb; font-family: 'Special Elite', monospace; text-align:center; padding:20px; }
+    canvas { border:1px solid #ccc; background:#000; display:block; margin:20px auto; }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h1>Reto Logo Animado</h1>
+  <p>Recrea el efecto de logo de DVD que rebota en el canvas.</p>
+  <canvas id="dvdCanvas" width="500" height="300"></canvas>
+
+  <script>
+    const canvas = document.getElementById('dvdCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let x = 100;
+    let y = 50;
+    let dx = 3;
+    let dy = 2.5;
+    const logoRadius = 20;
+
+    function drawLogo(){
+      // Círculo exterior (disco) más delgado
+      ctx.beginPath();
+      ctx.arc(x + logoRadius, y + logoRadius, logoRadius, 0, Math.PI * 2);
+      ctx.strokeStyle = '#ffcc00';
+      ctx.lineWidth = 9; // menos grueso
+      ctx.stroke();
+      ctx.closePath();
+
+      // Círculo interior (hueco central)
+      ctx.beginPath();
+      ctx.arc(x + logoRadius, y + logoRadius, logoRadius/4, 0, Math.PI * 2);
+      ctx.fillStyle = '#000';
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    function animate(){
+      ctx.clearRect(0,0,canvas.width, canvas.height);
+      drawLogo();
+
+      x += dx;
+      y += dy;
+
+      if(x + logoRadius*2 > canvas.width || x < 0){ dx = -dx; }
+      if(y + logoRadius*2 > canvas.height || y < 0){ dy = -dy; }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
