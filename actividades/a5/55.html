@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Flores Interactivas</title>
+  <style>
+    body {
+      font-family: 'Special Elite', monospace;
+      background-image: linear-gradient(135deg, #ffe4ec, #d0f0c0), url('flores.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      text-align: center;
+      padding: 50px;
+      transition: background-image 0.8s ease-in-out;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #8b2e5d;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px #fff;
+    }
+
+    p {
+      font-size: 1.5em;
+      color: #222;
+      margin: 20px 0;
+      text-shadow: 1px 1px 2px #fff;
+    }
+
+    img {
+      max-width: 300px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>presiona una tecla (a, s, d, f, g) o r para reiniciar</h1>
+  <p id="texto">🌸 aquí aparecerá el nombre de la flor 🌸</p>
+  <img id="imagen" src="flores.jpg" alt="Flor inicial">
+
+  <script>
+    document.addEventListener("keydown", function(event) {
+      const texto = document.getElementById("texto");
+      const imagen = document.getElementById("imagen");
+      const body = document.body;
+
+      switch(event.key.toLowerCase()) {
+        case "a":
+          texto.textContent = "🌹 rosa: símbolo de amor y pasión.";
+          imagen.src = "rosa.jpg";
+          body.style.backgroundImage = "linear-gradient(135deg, #ffcccc, #ff9999, #ffe6e6), url('rosa.jpg')";
+          break;
+        case "s":
+          texto.textContent = "🌻 girasol: alegría y energía positiva.";
+          imagen.src = "girasol.jpg";
+          body.style.backgroundImage = "linear-gradient(135deg, #fff7c0, #ffe680, #fff2cc), url('girasol.jpg')";
+          break;
+        case "d":
+          texto.textContent = "🌷 tulipán: elegancia y renovación.";
+          imagen.src = "tulipan.jpg";
+          body.style.backgroundImage = "linear-gradient(135deg, #ffd6e0, #ff99cc, #ffe6f0), url('tulipan.jpg')";
+          break;
+        case "f":
+          texto.textContent = "🌼 margarita: pureza e inocencia.";
+          imagen.src = "margarita.jpg";
+          body.style.backgroundImage = "linear-gradient(135deg, #e6f7ff, #cceeff, #ffffff), url('margarita.jpg')";
+          break;
+        case "g":
+          texto.textContent = "💜 orquídea: belleza y sofisticación.";
+          imagen.src = "orquidea.jpg";
+          body.style.backgroundImage = "linear-gradient(135deg, #e6ccff, #d1b3ff, #f3e6ff), url('orquidea.jpg')";
+          break;
+        case "r":
+          texto.textContent = "🌸 aquí aparecerá el nombre de la flor 🌸";
+          imagen.src = "flores.jpg";
+          body.style.backgroundImage = "linear-gradient(135deg, #ffe4ec, #d0f0c0), url('flores.jpg')";
+          break;
+        default:
+          texto.textContent = "presiona a, s, d, f, g o r para regresar.";
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
