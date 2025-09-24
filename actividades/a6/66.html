@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Animación Rotación Mouse</title>
+  <style>
+    body { 
+      margin:0; 
+      display:flex; 
+      flex-direction:column;
+      justify-content:center; 
+      align-items:center; 
+      height:100vh; 
+      background:#fff; 
+      font-family: 'Special Elite', monospace;
+    }
+    h1 {
+      margin-bottom: 5px;
+      font-size: 30px;
+      color: #e75480; /* rosa fuerte */
+    }
+    canvas { border:1px solid #000; }
+  </style>
+</head>
+<body>
+  <h1>Animación Rotación Mouse</h1>
+  <canvas id="canvas" width="600" height="400"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const heart = { x: canvas.width/2, y: canvas.height/2, angle: 0 };
+let mouse = { x: heart.x, y: heart.y };
+
+canvas.addEventListener("mousemove", (e) => {
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - rect.left;
+  mouse.y = e.clientY - rect.top;
+});
+
+function drawHeart(x, y, angle, size=40){
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.scale(size/50, size/50);
+
+  ctx.beginPath();
+  ctx.moveTo(0, -15);
+  ctx.bezierCurveTo(20, -35, 55, -5, 0, 35);
+  ctx.bezierCurveTo(-55, -5, -20, -35, 0, -15);
+  ctx.closePath();
+
+  ctx.fillStyle = "pink";
+  ctx.fill();
+  ctx.restore();
+}
+
+function loop(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  const dx = mouse.x - heart.x;
+  const dy = mouse.y - heart.y;
+  heart.angle = Math.atan2(dy, dx);
+
+  drawHeart(heart.x, heart.y, heart.angle, 60);
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>
