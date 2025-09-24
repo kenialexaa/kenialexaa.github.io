@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Animación Seno y Coseno</title>
+  <style>
+
+    body { margin:0; display:flex; justify-content:center; align-items:center; height:100vh; background:#fff; }
+    canvas { border:1px solid #ffffff; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="600" height="400"></canvas>
+<style>
+        body { 
+      margin:0; 
+      display:flex; 
+      flex-direction:column;
+      justify-content:center; 
+      align-items:center; 
+      height:100vh; 
+      background:#fff; 
+      font-family: "Courier New", Courier, monospace;
+    }
+    h1 {
+      margin-bottom: 0px;
+      font-size: 45px;
+      color: rgb(255, 68, 168);
+      font-style: italic;   /* cursiva */
+      font-weight: normal;  /* sin bold */
+      font-family: "Courier New", Courier, monospace;
+    }
+    canvas { border:1px solid #ffffff; }
+  </style>
+</head>
+<body>
+  <h1>Animación Onda Sinoidal/Coseno</h1>
+  <canvas id="canvas" width="600" height="400"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let t = 0;
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  // centro
+  const x = canvas.width/2;
+  const y = canvas.height/2 + Math.sin(t) * 50; // posición con seno
+  const r = 30 + Math.cos(t) * 15;              // radio con coseno
+
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI*2);
+  ctx.fillStyle = "pink";
+  ctx.fill();
+
+  t += 0.05;
+  requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+</body>
+</html>
