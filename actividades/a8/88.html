@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>My Little Pony</title>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: sans-serif;
+    background: linear-gradient(135deg, #f8ffde 0%, #eeffb6 30%, #e6ef61 70%, #fbff29 100%);
+  }
+
+  /* Título visible */
+  h1 {
+    margin-bottom: 40px;
+    font-size: 48px;
+    color: #b371d6;
+    font-family: "Courier New", Courier, monospace;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  }
+
+  .game {
+    position: relative;
+    width: 800px;
+    height: 480px;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  }
+
+  .extra {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 140px;
+    height: 140px;
+    user-select: none;
+    pointer-events: none;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+  <h1>My Little Pony</h1>
+  <div class="game">
+    <img src="fondo mlp.jpg" alt="Decoración" class="extra">
+    <img src="star.png" alt="Estrella" class="star">
+  </div>
+
+<script>
+  const star = document.querySelector('.star');
+  const game = document.querySelector('.game');
+
+  let x = 100;
+  let y = 0;
+  let velY = 0;
+  let dir = 1;
+
+  const gravity = 0.6;
+  const jumpPower = 12;
+  const speed = 3;
+
+  function loop() {
+    // Movimiento horizontal
+    x += dir * speed;
+    const maxX = game.clientWidth - star.clientWidth;
+    if (x <= 0) dir = 1;
+    if (x >= maxX) dir = -1;
+
+    // Saltos aleatorios
+    if (y === 0 && Math.random() < 0.02) {
+      velY = jumpPower;
+    }
+
+    // Física vertical
+    velY -= gravity;
+    y += velY;
+
+    if (y < 0) {
+      y = 0;
+      velY = 0;
+    }
+
+    // Aplicar posición
+    star.style.transform = `translate(${x}px, ${-y}px)`;
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+</script>
+</body>
+</html>
+
