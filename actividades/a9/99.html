@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Dibujos Canvas</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #fffdd0; /* fondo crema */
+    }
+    h1 {
+      font-family: "Courier New", Courier, monospace;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dibujos Canvas</h1>
+  <canvas id="lienzo" width="700" height="450" style="border:1px solid #000; background:#fffef7;"></canvas>
+
+  <script>
+    const c = document.getElementById("lienzo");
+    const ctx = c.getContext("2d");
+
+    // Casita rosa
+    function casita(){
+      ctx.fillStyle = "#f5a6d3"; // rosa
+      ctx.fillRect(280,230,120,100);
+      ctx.fillStyle = "#8b3a3a";
+      ctx.beginPath();
+      ctx.moveTo(280,230);
+      ctx.lineTo(340,170);
+      ctx.lineTo(400,230);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = "#6b4226";
+      ctx.fillRect(325,280,30,50);
+      ctx.fillStyle = "#add8e6";
+      ctx.fillRect(290,250,30,25);
+      ctx.strokeRect(290,250,30,25);
+    }
+
+    // Honguito
+    function honguito(){
+      ctx.fillStyle = "#d83a5a";
+      ctx.beginPath();
+      ctx.arc(470,260,45,Math.PI,0);
+      ctx.fill();
+      ctx.fillStyle = "#f7f0da";
+      ctx.fillRect(445,260,50,70);
+      ctx.fillStyle = "white";
+      ctx.beginPath(); ctx.arc(460,240,8,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(480,250,10,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(490,230,7,0,Math.PI*2); ctx.fill();
+    }
+
+    // Estrella
+    function estrella(cx, cy, r){
+      ctx.beginPath();
+      for(let i=0;i<5;i++){
+        ctx.lineTo(Math.cos((18+i*72)*Math.PI/180)*r+cx,
+                   -Math.sin((18+i*72)*Math.PI/180)*r+cy);
+        ctx.lineTo(Math.cos((54+i*72)*Math.PI/180)*r/2+cx,
+                   -Math.sin((54+i*72)*Math.PI/180)*r/2+cy);
+      }
+      ctx.closePath();
+      ctx.fillStyle = "yellow";
+      ctx.fill();
+      ctx.strokeStyle = "#e6b800";
+      ctx.stroke();
+    }
+
+    // Luna azul
+    function luna(){
+      let grad = ctx.createRadialGradient(200,100,10,200,100,40);
+      grad.addColorStop(0,"#b0e0ff");
+      grad.addColorStop(1,"#4682b4");
+      ctx.beginPath();
+      ctx.arc(200,100,40,0,Math.PI*2);
+      ctx.fillStyle=grad;
+      ctx.fill();
+      // sombreado para forma creciente
+      ctx.beginPath();
+      ctx.arc(215,100,40,0,Math.PI*2);
+      ctx.fillStyle = "#fffdd0"; // fondo crema para simular sombra
+      ctx.fill();
+      ctx.strokeStyle = "#4682b4";
+      ctx.stroke();
+    }
+
+    // Sol
+    function sol(){
+      ctx.beginPath();
+      ctx.arc(500,100,40,0,Math.PI*2);
+      ctx.fillStyle="orange";
+      ctx.fill();
+      for(let i=0;i<12;i++){
+        let ang = i*(Math.PI/6);
+        ctx.beginPath();
+        ctx.moveTo(500+Math.cos(ang)*45,100+Math.sin(ang)*45);
+        ctx.lineTo(500+Math.cos(ang)*65,100+Math.sin(ang)*65);
+        ctx.strokeStyle = "orange";
+        ctx.stroke();
+      }
+    }
+
+    // Dibujar todo
+    casita();
+    honguito();
+    estrella(350,370,50);
+    luna();
+    sol();
+  </script>
+</body>
+</html>
+
+
+
+
