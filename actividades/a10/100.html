@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🎨 Mini Paint App</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #f8cce2; /* Rosa bebé */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    font-family: "Courier New", Courier, monospace;
+    }
+
+    h1 {
+      color: #4b2c47;
+      background-color: white;
+      padding: 10px 25px;
+      border-radius: 12px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    font-family: "Courier New", Courier, monospace;
+      font-size: 40px;
+      letter-spacing: 1px;
+    }
+
+    .toolbar {
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 4px;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: transform 0.1s;
+       font-family: "Courier New", Courier, monospace;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    #red { background-color: rgb(231, 104, 104); }
+    #yellow { background-color: rgb(241, 227, 146); color: black; }
+    #pink { background-color: rgb(255, 155, 205); }
+    #purple { background-color: rgb(211, 155, 211); }
+    #blue { background-color: rgb(139, 180, 224); }
+
+    #clear { background-color: #555; }
+
+    .size-btn {
+      background-color: #444;
+      color: white;
+    }
+
+    canvas {
+      background-color: white;
+      border: 2px solid #ccc;
+      cursor: crosshair;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 Mini Paint App</h1>
+
+  <div class="toolbar">
+    <button id="red">Rojo</button>
+    <button id="yellow">Amarillo</button>
+    <button id="pink">Rosa</button>
+    <button id="purple">Morado</button>
+    <button id="blue">Azul</button>
+    <button id="clear">Borrar todo</button>
+  </div>
+
+  <div class="toolbar">
+    <button class="size-btn" id="small">Delgado</button>
+    <button class="size-btn" id="medium">Medio</button>
+    <button class="size-btn" id="large">Grueso</button>
+  </div>
+
+  <canvas id="paintCanvas" width="800" height="400"></canvas>
+
+  <script>
+    const canvas = document.getElementById('paintCanvas');
+    const ctx = canvas.getContext('2d');
+    let painting = false;
+    let color = 'black';
+    let lineWidth = 3;
+
+    function startPosition(e) {
+      painting = true;
+      draw(e);
+    }
+
+    function endPosition() {
+      painting = false;
+      ctx.beginPath();
+    }
+
+    function draw(e) {
+      if (!painting) return;
+      ctx.lineWidth = lineWidth;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = color;
+
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    }
+
+    canvas.addEventListener('mousedown', startPosition);
+    canvas.addEventListener('mouseup', endPosition);
+    canvas.addEventListener('mousemove', draw);
+
+    // Cambiar color
+    document.getElementById('red').onclick = () => color = 'red';
+    document.getElementById('yellow').onclick = () => color = 'gold';
+    document.getElementById('pink').onclick = () => color = 'hotpink';
+    document.getElementById('purple').onclick = () => color = 'purple';
+    document.getElementById('blue').onclick = () => color = 'blue';
+
+    // Borrar todo
+    document.getElementById('clear').onclick = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+
+    // Cambiar grosor
+    document.getElementById('small').onclick = () => lineWidth = 2;
+    document.getElementById('medium').onclick = () => lineWidth = 5;
+    document.getElementById('large').onclick = () => lineWidth = 10;
+  </script>
+</body>
+</html>
+
+
