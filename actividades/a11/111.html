@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulación de Reloj Rosa</title>
+  <style>
+    /* Fondo general rosa */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, #ffd6eb 0%, #ffb3d9 40%, #ff99cc 100%);
+  font-family: "Courier New", Courier, monospace;
+    }
+
+    /* Título visible */
+    h1 {
+      color: #fa1186;
+      text-shadow: 1px 1px 3px rgba(255, 80, 150, 0.3);
+      font-size: 2rem;
+      margin-bottom: 55px;
+    }
+
+    /* Marco del reloj */
+    .clock {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 10px solid #ff66b2;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 60%, #ffe6f2 100%);
+      box-shadow: 0 0 30px rgba(255, 100, 150, 0.4);
+    }
+
+    /* Centro del reloj */
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      background: #ff3385;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+
+    /* Manecillas */
+    .hand {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: translate(-50%, -100%) rotate(0deg);
+      border-radius: 5px;
+    }
+
+    .hour {
+      width: 6px;
+      height: 70px;
+      background: #ff4da6;
+    }
+
+    .minute {
+      width: 4px;
+      height: 100px;
+      background: #ff80bf;
+    }
+
+    .second {
+      width: 2px;
+      height: 120px;
+      background: #e499cf;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Marcas del reloj */
+    .mark {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 3px;
+      height: 15px;
+      background: #ffb3d9;
+      transform-origin: center 145px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <h1>simulación de reloj rosa</h1>
+
+  <div class="clock">
+    <div id="marks"></div>
+    <div class="hand hour" id="hour"></div>
+    <div class="hand minute" id="minute"></div>
+    <div class="hand second" id="second"></div>
+    <div class="center"></div>
+  </div>
+
+  <script>
+    // Crear marcas del reloj
+    const marks = document.getElementById('marks');
+    for (let i = 0; i < 12; i++) {
+      const mark = document.createElement('div');
+      mark.className = 'mark';
+      mark.style.transform = `rotate(${i * 30}deg) translate(-50%, 10px)`;
+      marks.appendChild(mark);
+    }
+
+    const hour = document.getElementById('hour');
+    const minute = document.getElementById('minute');
+    const second = document.getElementById('second');
+
+    // Velocidades aceleradas y proporcionales
+    const vr1 = 0.5;  // horas
+    const vr2 = 1.5;  // minutos
+    const vr3 = 6;    // segundos
+
+    let h = 0, m = 0, s = 0;
+
+    function updateClock() {
+      // Aumentar los ángulos en proporción
+      h += vr1;
+      m += vr2;
+      s += vr3;
+
+      hour.style.transform = `translate(-50%, -100%) rotate(${h}deg)`;
+      minute.style.transform = `translate(-50%, -100%) rotate(${m}deg)`;
+      second.style.transform = `translate(-50%, -100%) rotate(${s}deg)`;
+
+      requestAnimationFrame(updateClock);
+    }
+
+    updateClock();
+  </script>
+</body>
+</html>
+
